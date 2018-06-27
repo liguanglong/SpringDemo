@@ -22,13 +22,15 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public int judgeByUserNameAndPassWord( String userName, String passWord) {
-        return userDao.judgeByUserNameAndPassWord(userName,passWord);
-    }
-    
     public User getUserByName(String username) {
         return userDao.getUserByName(username);
     }
+
+    public int judgeByUserNameAndPassWord( String userName, String passWord) {
+        return userDao.judgeByUserNameAndPassWord(userName,passWord);
+    }
+
+
 
 //    public int judgeByUserNameAndPassWord( String userName, String passWord) {
 //        User user = userDao.getUserByName(userName);

@@ -3,11 +3,10 @@ package com.example.service.impl;
 import com.example.dao.UserDao;
 import com.example.pojo.User;
 import com.example.service.UserService;
-
 import org.springframework.stereotype.Service;
 
-
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -16,7 +15,11 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     public User getUserById(int id) {
-        return userDao.findUserById(id);
+        if(id==1){
+            return null;
+        }else{
+            return userDao.findUserById(id);
+        }
     }
 
     public int judgeByUserNameAndPassWord( String userName, String passWord) {
@@ -42,6 +45,11 @@ public class UserServiceImpl implements UserService {
 
     public User getUserByName(String username) {
         return userDao.getUserByName(username);
+    }
+
+    @Override
+    public int addUserList(List<User> userList) {
+        return userDao.addUserList(userList);
     }
 
 }

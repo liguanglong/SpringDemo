@@ -1,10 +1,14 @@
 package com.example.dao;
 
+import com.example.dao.base.CommonCRUDDao;
 import com.example.pojo.User;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+import java.util.Map;
 
-public interface UserDao {
+
+public interface UserDao extends CommonCRUDDao<User> {
 
     int getAllUsersCount();
 
@@ -15,4 +19,11 @@ public interface UserDao {
     User findUserById(int id);
 
     User getUserByName(String username);
+
+    int addUserList(List<User> userList);
+
+    List<User> findEntityByCond(Map<String, Object> cond);
+
+    List<User> getUserList();
+
 }

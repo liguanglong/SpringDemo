@@ -1,11 +1,23 @@
 package com.example.pojo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import java.util.Date;
+
 public class User {
+    @JsonSerialize(include= JsonSerialize.Inclusion.NON_EMPTY)
     private int id;
+    @JsonSerialize(include= JsonSerialize.Inclusion.NON_EMPTY)
     private String name;
+    @JsonSerialize(include= JsonSerialize.Inclusion.NON_EMPTY)
     private String password;
+    @JsonSerialize(include= JsonSerialize.Inclusion.NON_EMPTY)
     private String email;
-    private String lastLogin;
+    @JsonSerialize(include= JsonSerialize.Inclusion.NON_EMPTY)
+    private Date lastLogin;
+
+//    public User() {
+//    }
 
 
     public int getId() {
@@ -40,14 +52,13 @@ public class User {
         this.email = email;
     }
 
-    public String getLastLogin() {
+    public Date getLastLogin() {
         return lastLogin;
     }
 
-    public void setLastLogin(String lastLogin) {
+    public void setLastLogin(Date lastLogin) {
         this.lastLogin = lastLogin;
     }
-
 
     @Override
     public String toString() {

@@ -1,29 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.dao.UserDao">
+<mapper namespace="User">
+    <resultMap id="BaseResultMap" type="User">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"/>
+        <result property="password" column="password"/>
+        <result property="email" column="email"/>
+        <result property="lastLogin" column="last_login"/>
+    </resultMap>
+
+
+    <insert id="addEntity" parameterType="User">
+        INSERT INTO USER
+        <trim prefix="(" suffix=")">
+            id,name,password,email
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")">
+            #{id},#{name},#{password},#{email}
+        </trim>
+    </insert>
 
     <select id="getAllUsersCount" resultType="int">
         select count(*) from user
     </select>
 
-    <select id="findUserById" resultType="com.example.pojo.User" parameterType="int">
-        select * from user where id=#{value}
+    <select id="findEntityByCond" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT * FROM user u
+        <if test="emailSort!=null">
+            ORDER BY u.email ${emailSort}
+        </if>
+        <if test="loginSort!=null">
+            ORDER BY u.last_login ${loginSort}
+        </if>
+        <if test="emailSort == null and loginSort == null">
+            ORDER BY u.id
+        </if>
     </select>
 
-    <select id="judgeByUserNameAndPassWord" resultType="int" >
-        SELECT COUNT(*) from user WHERE name = #{username} and password=#{password}
+    <select id="findUserById" resultMap="BaseResultMap" parameterType="int">
+        select * from user where id=#{value,jdbcType=INTEGER}
     </select>
 
-    <select id="getUserByName" resultType="com.example.pojo.User" parameterType="String">
-        select * from user WHERE name = #{value}
+    <select id="judgeByUserNameAndPassWord" resultType="int" parameterType="java.util.Map">
+        SELECT COUNT(*) from user WHERE name = #{username,jdbcType=VARCHAR} and password=#{password,jdbcType=VARCHAR}
     </select>
 
-    <resultMap id="userResultMap" type="User">
-        <id property="id" column="id"></id>
-        <result property="name" column="name"></result>
-        <result property="password" column="password"></result>
-        <result property="email" column="email"></result>
-        <result property="lastLogin" column="last_login"></result>
-    </resultMap>
+    <select id="getUserByName" resultMap="BaseResultMap" parameterType="String">
+        select * from user WHERE name = #{value,jdbcType=VARCHAR}
+    </select>
 
-    </mapper>
+    <update id="updateEntity" parameterType="User">
+        UPDATE user
+        <set>
+            <if test="name!=null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="password!=null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="email!=null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            last_login = now()
+        </set>
+        <where>
+            id = #{id,jdbcType=DECIMAL}
+        </where>
+
+    </update>
+
+    <delete id="deleteEntity" parameterType="User">
+        DELETE from user
+        <where>
+            <if test="id!=null">
+                id = #{id,jdbcType=DECIMAL}
+            </if>
+        </where>
+    </delete>
+
+    <select id="getUserList" resultMap="BaseResultMap">
+        select * from USER
+    </select>
+</mapper>

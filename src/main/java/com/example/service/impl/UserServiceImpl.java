@@ -15,9 +15,9 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     public User getUserById(int id) {
-        if(id==0){
+        if (id == 0) {
             return null;
-        }else{
+        } else {
             return userDao.findUserById(id);
         }
     }
@@ -26,10 +26,9 @@ public class UserServiceImpl implements UserService {
         return userDao.getUserByName(username);
     }
 
-    public int judgeByUserNameAndPassWord( String userName, String passWord) {
-        return userDao.judgeByUserNameAndPassWord(userName,passWord);
+    public int judgeByUserNameAndPassWord(String userName, String passWord) {
+        return userDao.judgeByUserNameAndPassWord(userName, passWord);
     }
-
 
 
 //    public int judgeByUserNameAndPassWord( String userName, String passWord) {
@@ -49,10 +48,14 @@ public class UserServiceImpl implements UserService {
 //    }
 
 
-
     @Override
     public int addUserList(List<User> userList) {
         return userDao.addUserList(userList);
+    }
+
+    @Override
+    public List<User> getUserList() {
+        return userDao.getUserList();
     }
 
 }
